@@ -1,0 +1,247 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    background-color: #000000;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    display: block;
+    overflow: hidden;
+}
+
+/***/
+
+.mu-input {
+    min-height: 35px !important;
+    margin-top: 20px !important;
+}
+
+.mu-infinite-scroll-text {
+    color: #FFFFFF !important;
+}
+
+.mu-text-field-input {
+    color: #989898 !important;
+}
+
+/*
+    搜索框样式
+*/
+
+.search-box {
+    width: 100%;
+    padding: 10px;
+}
+
+.content-box {
+    width: 100%;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+}
+
+.custom-icon {
+    font-size: 22px;
+    color: #12D526;
+    margin-left: 10px;
+}
+
+/* 节点数据样式*/
+
+.flex-wrapper {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.flex-demo>.total,
+.offline {
+    color: #FFB14A;
+}
+
+.flex-demo>.online {
+    color: #00FF1A;
+    margin-right: 5px;
+}
+
+.node-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.data-box1,
+.data-box2,
+.data-box3 {
+    min-width: 170px;
+    min-height: 70px;
+    background-color: red;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.data-box1>p,
+.data-box2>p,
+.data-box3>p {
+    width: 175px;
+    display: block;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: 700;
+    color: #FFFFFF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.data-box1 {
+    margin-left: 10px;
+    background-image: linear-gradient(to left, #AB4BFF, #3146FF);
+}
+
+.data-box1::after,
+.data-box2::after,
+.data-box3::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.data-box1::before,
+.data-box2::before,
+.data-box3::before {
+    content: "";
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.data-box1::after {
+    background-color: rgba(255, 255, 255, 0.12);
+    top: 38px;
+    right: -20px;
+}
+
+.data-box1::before {
+    background-color: rgba(255, 255, 255, 0.12);
+    top: 28px;
+    right: 5px;
+}
+
+.data-box2 {
+    background-image: linear-gradient(to right, #80D3FF, #0090FF);
+}
+
+.data-box2::after {
+    background-color: rgba(255, 255, 255, 0.15);
+    top: 38px;
+    right: -20px;
+    border-radius: 50%;
+}
+
+.data-box2::before {
+    background-color: rgba(255, 255, 255, 0.15);
+    top: 30px;
+    right: 18px;
+    border-radius: 50%;
+}
+
+.data-box3 {
+    background-image: linear-gradient(to left, #FFC663, #FF7700);
+}
+
+.data-box3::after {
+    background-color: rgba(255, 255, 255, 0.15);
+    top: 38px;
+    right: -25px;
+    border-radius: 50%;
+}
+
+.data-box3::before {
+    background-color: rgba(255, 255, 255, 0.15);
+    top: 60px;
+    right: 40px;
+    border-radius: 50%;
+}
+
+/* 列表数据样式 */
+
+.list-data-box {
+    padding: 5px;
+}
+
+.info-box {
+    width: 100%;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #272723;
+}
+
+.cell-title,
+.cell-data {
+    font-size: 12px;
+    margin: 0;
+}
+
+.cell-title {
+    color: #C4C4C4;
+}
+
+.cell-data {
+    color: #12D526;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.title-box,
+.title-box2,
+.value-box {
+    text-align: center;
+}
+
+.title-box2 {
+    margin-top: 10px
+}
+
+.state::before {
+    content: "●";
+    margin-right: 5px;
+}
+
+/* 返回顶部*/
+
+.back-box {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
