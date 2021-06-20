@@ -106,6 +106,20 @@ new Vue({
                 this.getDataList()
             }
         },
+        getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    console.log("找参数" + pair[1]);
+                    return pair[1];
+                }
+            }
+            console.log("找不到参数");
+            return ("");
+        },
+
         // 上拉刷新数据
         refresh() {
             this.refreshing = true;
@@ -125,12 +139,17 @@ new Vue({
                 });
             }, 1000)
         },
+       
         // 列表数据请求
         getDataList() {
             // 请求数据
+
+            this.searchValue = this.getQueryVariable('phone');
+
+            console.log("phone=" + this.searchValue);
             axios({
                 method: 'POST',
-                url: this.baseUrl + '/postList' + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue,
+                url: this.baseUrl + '/postList' + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue+'&rnd'+Math.ceil(Math.random()*10),
                 data: {
                     limit: this.pageInfo.limit,
                     page: this.pageInfo.pages
