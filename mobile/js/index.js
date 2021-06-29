@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
     data() {
         return {
-            baseUrl: 'https://api.swarmbee.xyz', // http://beepush.zkyc.vip  //http://192.168.110.159:8080
+            baseUrl: 'https://api.swarmbee.xyz', // http://beepush.zkyc.vip  //http://192.168.110.159:8080   // http://183.240.60.54:9006 // /bee_list?user=all
             searchValue: '',
             dataList: [], // 数据表格
             num: 0,
@@ -29,7 +29,7 @@ new Vue({
         this.getDataList()
     },
     methods: {
-        searchKeypress(event) {
+        searchKeypress (event) {
             new Promise((resolve, reject) => {
                 if (event.keyCode === 13) {
                     if (this.isPhone(this.searchValue) || this.searchValue === '') {
@@ -106,20 +106,6 @@ new Vue({
                 this.getDataList()
             }
         },
-        getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split("&");
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                if (pair[0] == variable) {
-                    console.log("找参数" + pair[1]);
-                    return pair[1];
-                }
-            }
-            console.log("找不到参数");
-            return ("");
-        },
-
         // 上拉刷新数据
         refresh() {
             this.refreshing = true;
@@ -139,43 +125,34 @@ new Vue({
                 });
             }, 1000)
         },
-       
         // 列表数据请求
         getDataList() {
-            // 请求数据
-
-            this.searchValue = this.getQueryVariable('phone');
-
-            console.log("phone=" + this.searchValue);
+            const data = {
+                limit: this.pageInfo.limit,
+                page: this.pageInfo.pages,
+                phone: this.searchValue,
+                rnd5: ''
+            }
+            // 请求数据   + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue
             axios({
                 method: 'GET',
-                url: this.baseUrl + '/getList' + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue+'&rnd'+Math.ceil(Math.random()*10),
-                data: {
-                    limit: this.pageInfo.limit,
-                    page: this.pageInfo.pages
-                }
+                url: this.baseUrl + '/getListnew',
+                params: data
             }).then(res => {
-                const {
-                    page,
-                    code,
-                    msg
-                } = res.data
-                const {
-                    total,
-                    records
-                } = page.data
+                const {data, code, msg} = res.data
+                // console.log(data,data.data)
                 // 分页数据
-                this.pageInfo.total = total
+                this.pageInfo.total = data.totalNode
                 // 头部数据
-                this.headData.staySum = page.staySum
-                this.headData.alreadySum = page.alreadySum
-                this.headData.sum = page.sum
-                this.headData.offSum = page.offSum
-                this.headData.onSum = page.onSum
-                this.headData.nodeSum = page.nodeSum
+                this.headData.staySum = data.staySum
+                this.headData.alreadySum = data.totalGBzz
+                this.headData.sum = data.totalCheque
+                this.headData.offSum = data.offlines || 0
+                this.headData.onSum = data.onlines || 0
+                this.headData.nodeSum = data.totalNode
                 // 节点列表数据
-                for (let item in records) {
-                    this.dataList.push(records[item])
+                for (let item in data.data) {
+                    this.dataList.push(data.data[item])
                 }
                 this.loading = false;
                 // 判断当前列表数据和分页总数是否相等
@@ -184,6 +161,7 @@ new Vue({
                 }
             }).catch(err => {
                 this.loading = false
+                console.log(err)
                 this.$toast.message({
                     position: 'top',
                     message: '获取数据失败',
@@ -193,7 +171,7 @@ new Vue({
             })
         },
         // 返回顶部
-        backTop() {
+        backTop () {
             window.scrollTo(0, 0)
         },
         // 点击加载更多
@@ -202,21 +180,21 @@ new Vue({
             this.getDataList()
         },
         // 手机号验证
-        isPhone(data) {
+        isPhone (data) {
             const mobile = /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/
-            return mobile.test(data)
+            return  mobile.test(data)
         },
         /**
          * 过滤节点地址
          * */
         f_nodeAddr(data) {
-            return data.slice(1, -1)
+           return data.slice(1,-1)
         },
         // 状态颜色转换
         f_Color(data) {
-            if (data === 0) {
+            if (data < 1) {
                 return '#FF4646'
-            } else if (data === 1) {
+            } else {
                 return '#12D526'
             }
         }
@@ -224,9 +202,9 @@ new Vue({
     filters: {
         // 状态过滤
         f_State(data) {
-            if (data === 0) {
+            if (data < 1) {
                 return '离线'
-            } else if (data === 1) {
+            } else {
                 return '在线'
             }
         },

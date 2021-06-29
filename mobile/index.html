@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Bzz">
     <meta name="keywords" content="Bzz">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="icon" href="">
     <link rel="stylesheet" href="./css/icon.css">
     <link rel="stylesheet" href="./css/index.css">
@@ -16,125 +16,116 @@
     <script type="text/javascript" src="./js/muse-ui-toast.js"></script>
     <script type="text/javascript" src="./js/muse-ui.js"></script>
     <script type="text/javascript" src="./js/moment,min.js"></script>
-    <title>中科*中淳云存储节点列表</title>
+    <title>Bzz</title>
 </head>
-
 <body>
-    <div id="app">
-        <!-- 搜索框   -->
-        <div class="search-box">
-            <mu-text-field v-model="searchValue" @keypress="searchKeypress" @blur="searchClick" :full-width="true" class="content-box" :solo="true">
-                <img slot="prepend" class="icon" src="./images/sslogo.png">
-                <i slot="append" @click="searchClick" class="custom-icon">&#xe622;</i>
-            </mu-text-field>
-            <br/>
-        </div>
-        <!--  头部信息   -->
-        <div class="head-box">
-            <!--   节点基本信息     -->
-            <mu-flex class="flex-wrapper" align-items="center">
-                <mu-flex class="flex-demo" justify-content="start" fill>
-                    <p class="total">总节点数：{{ headData.nodeSum }}</p>
-                </mu-flex>
-                <mu-flex class="flex-demo" justify-content="end" fill>
-                    <p class="online">在线：{{ headData.onSum }}</p>
-                    <p class="offline">离线：{{ headData.offSum }}</p>
-                </mu-flex>
+<div id="app">
+    <!-- 搜索框   -->
+    <div class="search-box">
+        <mu-text-field v-model="searchValue" @keypress="searchKeypress" @blur="searchClick" :full-width="true"
+                       class="content-box" :solo="true">
+            <img slot="prepend" class="icon" src="./images/sslogo.png">
+            <i slot="append" @click="searchClick" class="custom-icon">&#xe622;</i>
+        </mu-text-field>
+        <br/>
+    </div>
+    <!--  头部信息   -->
+    <div class="head-box">
+        <!--   节点基本信息     -->
+        <mu-flex class="flex-wrapper" align-items="center">
+            <mu-flex class="flex-demo" justify-content="start" fill>
+                <p class="total">总节点数：{{ headData.nodeSum }}</p>
             </mu-flex>
-            <!--   节点其他信息     -->
-            <div class="node-box">
-                <!--            <div class="data-box1">-->
-                <!--                <p>{{ headData.staySum }}</p>-->
-                <!--                <p style="font-size: 12px">总待兑换支票</p>-->
-                <!--            </div>-->
-                <div class="data-box2">
-                    <p>{{ headData.alreadySum }}</p>
-                    <p style="font-size: 12px">总兑换(gBZZ)</p>
-                </div>
-                <div class="data-box3">
-                    <p>{{ headData.sum }}</p>
-                    <p style="font-size: 12px">总支票合计</p>
-                </div>
+            <mu-flex class="flex-demo" justify-content="end" fill>
+                <p class="online">在线：{{ headData.onSum }}</p>
+                <p class="offline">离线：{{ headData.offSum }}</p>
+            </mu-flex>
+        </mu-flex>
+        <!--   节点其他信息     -->
+        <div class="node-box">
+            <!--            <div class="data-box1">-->
+            <!--                <p>{{ headData.staySum }}</p>-->
+            <!--                <p style="font-size: 12px">总待兑换支票</p>-->
+            <!--            </div>-->
+            <div class="data-box2">
+                <p>{{ headData.alreadySum }}</p>
+                <p style="font-size: 12px">总兑换(gBZZ)</p>
+            </div>
+            <div class="data-box3">
+                <p>{{ headData.sum }}</p>
+                <p style="font-size: 12px">总支票合计</p>
             </div>
         </div>
-        <!--  列表数据  -->
-        <div class="list-data-box">
-            <mu-container ref="container">
-                <mu-load-more @refresh="refresh" :refreshing="refreshing" :loaded-all="loadedAdd" :loading="loading" @load="load">
-                    <transition-group v-if="headData">
-                        <mu-container class="info-box animate__animated animate__bounceInLeft" v-for="(item, index) in dataList" :key="index">
-                            <!--       表头标题         -->
-                            <mu-row gutter class="title-box">
-                                <mu-col span="4">
-                                    <p class="cell-title">手机账号</p>
-                                </mu-col>
-                                <mu-col span="5">
-                                    <p class="cell-title">节点地址</p>
-                                </mu-col>
-                                <!--                            <mu-col span="3"><p class="cell-title">待兑换支票</p></mu-col>-->
-                                <mu-col span="3">
-                                    <p class="cell-title">端口</p>
-                                </mu-col>
-                            </mu-row>
-                            <!--       数据         -->
-                            <mu-row gutter class="value-box">
-                                <mu-col span="4">
-                                    <p class="cell-data">{{ item.phone || '' | f_Phone}}</p>
-                                </mu-col>
-                                <mu-col span="5">
-                                    <p class="cell-data">{{ item.nodeAddr }}</p>
-                                </mu-col>
-                                <!--                            <mu-col span="3"><p class="cell-data">{{item.stayExchanged}}</p></mu-col>-->
-                                <mu-col span="3">
-                                    <p class="cell-data">{{item.port}}</p>
-                                </mu-col>
-                            </mu-row>
-                            <!--       表头标题         -->
-                            <mu-row gutter class="title-box2">
-                                <mu-col span="4">
-                                    <p class="cell-title">服务器</p>
-                                </mu-col>
-                                <mu-col span="5">
-                                    <p class="cell-title">创建日期</p>
-                                </mu-col>
-                                <!--                            <mu-col span="3"><p class="cell-title">已兑换支票</p></mu-col>-->
-                                <mu-col span="3">
-                                    <p class="cell-title">状态</p>
-                                </mu-col>
-                            </mu-row>
-                            <!--       数据         -->
-                            <mu-row gutter class="value-box">
-                                <mu-col span="4">
-                                    <p class="cell-data">{{ item.ip }}</p>
-                                </mu-col>
-                                <mu-col span="5">
-                                    <p class="cell-data">{{ moment(item.createTime).format('YYYY/MM/DD') }}</p>
-                                </mu-col>
-                                <!--                            <mu-col span="3"><p class="cell-data">{{ item.alreadyExchanged }}</p></mu-col>-->
-                                <mu-col span="3">
-                                    <p class="cell-data state" :style="{ color: f_Color(item.status) }">
-                                        {{ item.status | f_State}}</p>
-                                </mu-col>
-                            </mu-row>
-                        </mu-container>
-                    </transition-group>
-                </mu-load-more>
-                <div style="color: #FFFFFF; width: 100%; text-align: center" v-if="loadedAdd">没有更多数据了</div>
-                <!--            <div style="color: #FFFFFF; width: 100%; text-align: center" v-if="!loadedAdd" >-->
-                <!--                <mu-chip class="demo-chip" color="green" @click="clickLoadMore">-->
-                <!--                    点击加载更多-->
-                <!--                </mu-chip>-->
-                <!--            </div>-->
-            </mu-container>
-        </div>
-        <!--  返回顶部  -->
-        <div class="back-box">
-            <mu-chip class="demo-chip" color="green" @click="backTop">
-                返回顶部
-            </mu-chip>
-        </div>
     </div>
+    <!--  列表数据  -->
+    <div class="list-data-box">
+        <mu-container ref="container">
+            <mu-load-more @refresh="refresh" :refreshing="refreshing" :loaded-all="loadedAdd" :loading="loading"
+                          @load="load">
+                <transition-group v-if="headData">
+                    <mu-container class="info-box animate__animated animate__bounceInLeft"
+                                  v-for="(item, index) in dataList" :key="index">
+                        <!--       表头标题         -->
+                        <mu-row gutter class="title-box">
+                            <mu-col span="5"><p class="cell-title">手机账号</p></mu-col>
+                            <mu-col span="4"><p class="cell-title">节点地址</p></mu-col>
+                            <mu-col span="3"><p class="cell-title">已兑换支票</p></mu-col>
+                        </mu-row>
+                        <!--       数据         -->
+                        <mu-row gutter class="value-box">
+                            <mu-col span="5"><p class="cell-data">{{ item.phone || '' | f_Phone}}</p></mu-col>
+                            <mu-col span="4"><p class="cell-data">{{ item.nodeAddr }}</p></mu-col>
+                            <mu-col span="3"><p class="cell-data">{{item.alreadyExchanged}}</p></mu-col>
+                        </mu-row>
+                        <!--       表头标题         -->
+                        <mu-row gutter class="title-box2">
+                            <mu-col span="5"><p class="cell-title">节点名称</p></mu-col>
+                            <mu-col span="4"><p class="cell-title">创建日期</p></mu-col>
+                            <mu-col span="3"><p class="cell-title">状态</p></mu-col>
+                        </mu-row>
+                        <!--       数据         -->
+                        <mu-row gutter class="value-box">
+                            <mu-col span="5"><p class="cell-data">{{ item.ip }}</p></mu-col>
+                            <mu-col span="4"><p class="cell-data">{{ moment(item.createTime).format('YYYY/MM/DD') }}</p>
+                            </mu-col>
+                            <mu-col span="3"><p class="cell-data state" :style="{ color: f_Color(item.peers) }">
+                                {{ item.peers | f_State}}</p></mu-col>
+                        </mu-row>
+                        <!--       表头标题         -->
+                        <mu-row gutter class="title-box2">
+                            <mu-col span="5"><p class="cell-title">连接数</p></mu-col>
+                            <mu-col span="4"><p class="cell-title">支票</p></mu-col>
+                            <mu-col span="3"><p class="cell-title">钱包地址</p></mu-col>
+                        </mu-row>
+                        <!--       数据         -->
+                        <mu-row gutter class="value-box">
+                            <!--    连接数：item.countPeers    支票：  item.countChequebook  待提现： item.unCashoutPeers  -->
+                            <mu-col span="5"><p class="cell-data">{{ item.peers }}</p></mu-col>
+                            <mu-col span="4"><p class="cell-data">
+                                <strong style="color: #22CF39">{{item.totalReceived}}</strong> /
+                                <strong style="color: #F81515">{{item.totalSend}}</strong> /
+                                <strong style="color: #1E1E1E">{{item.totalCheque}}</strong>
+                            </p></mu-col>
+                            <mu-col span="3"><p class="cell-data">{{ item.chequeAddr }}</p></mu-col>
+                        </mu-row>
+                    </mu-container>
+                </transition-group>
+            </mu-load-more>
+            <div style="color: #FFFFFF; width: 100%; text-align: center" v-if="loadedAdd">没有更多数据了</div>
+            <!--            <div style="color: #FFFFFF; width: 100%; text-align: center" v-if="!loadedAdd" >-->
+            <!--                <mu-chip class="demo-chip" color="green" @click="clickLoadMore">-->
+            <!--                    点击加载更多-->
+            <!--                </mu-chip>-->
+            <!--            </div>-->
+        </mu-container>
+    </div>
+    <!--  返回顶部  -->
+    <div class="back-box">
+        <mu-chip class="demo-chip" color="green" @click="backTop">
+            返回顶部
+        </mu-chip>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="./js/index.js"></script>
-
 </html>
