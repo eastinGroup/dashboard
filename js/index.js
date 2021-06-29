@@ -148,8 +148,8 @@ new Vue({
 
             console.log("phone=" + this.searchValue);
             axios({
-                method: 'POST',
-                url: this.baseUrl + '/postList' + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue+'&rnd'+Math.ceil(Math.random()*10),
+                method: 'GET',
+                url: this.baseUrl + '/getList' + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue+'&rnd'+Math.ceil(Math.random()*10),
                 data: {
                     limit: this.pageInfo.limit,
                     page: this.pageInfo.pages
