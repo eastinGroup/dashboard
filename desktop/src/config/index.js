@@ -18,7 +18,7 @@ export default {
    */
   baseUrl: {
     dev: '',
-    pro: 'https://api.swarmbee.xyz'
+    pro: ''
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

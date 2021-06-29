@@ -26,6 +26,9 @@ new Vue({
         }
     },
     mounted() {
+        this.pageInfo.limit = this.paramData('limit')
+        this.pageInfo.pages = this.paramData('page')
+        this.searchValue = this.paramData('phone')
         this.getDataList()
     },
     methods: {
@@ -178,6 +181,15 @@ new Vue({
         clickLoadMore() {
             this.pageInfo.pages += 1
             this.getDataList()
+        },
+        // 获取url地址栏参数方法
+        paramData (name) {
+            const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            const r = window.location.search.substr(1).match(reg);
+            console.log(unescape(r[2]),r)
+            if (r != null) return unescape(r[2]);
+
+            return null;
         },
         // 手机号验证
         isPhone (data) {

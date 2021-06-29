@@ -166,7 +166,7 @@ html {
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #272723;
     box-shadow: 0 0 5px 0 rgba(255,255,255, 0.5);
 }
 .cell-title, .cell-data {
@@ -177,7 +177,7 @@ html {
     color: #C4C4C4;
 }
 .cell-data {
-    color: #1E1E1E;
+    color: #12D526;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
