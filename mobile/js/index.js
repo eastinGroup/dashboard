@@ -26,9 +26,9 @@ new Vue({
         }
     },
     mounted() {
-        this.pageInfo.limit = this.paramData('limit')
-        this.pageInfo.pages = this.paramData('page')
-        this.searchValue = this.paramData('phone')
+        this.pageInfo.limit = this.paramData('limit') === null ? 10 : this.paramData('limit')
+        this.pageInfo.pages = this.paramData('page') === null ? 1 : this.paramData('page')
+        this.searchValue = this.paramData('phone') === null ? '': this.paramData('phone')
         this.getDataList()
     },
     methods: {
@@ -186,9 +186,7 @@ new Vue({
         paramData (name) {
             const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             const r = window.location.search.substr(1).match(reg);
-            console.log(unescape(r[2]),r)
             if (r != null) return unescape(r[2]);
-
             return null;
         },
         // 手机号验证
