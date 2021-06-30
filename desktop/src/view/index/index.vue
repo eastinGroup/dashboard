@@ -20,13 +20,13 @@
         <div class="bzz-other-tag">
           <Tag checkable color="primary" size="large">在线：{{stateData.onSum}}</Tag>
           <Tag checkable color="error" size="large">离线：{{stateData.offSum}}</Tag>
-          <Select v-model="queryParam.selectValue" @on-change="queryData" style="width: 250px;" filterable>
+          <Select v-model="inputParam.selectValue" @on-change="queryData" style="width: 250px;" filterable>
             <div slot="prefix" style="width: 60px;height: 100%">服务器：</div>
             <Option v-for="(item, index) in selectList" :value="item.ip" :key="index">{{ item.ip }}</Option>
           </Select>
         </div>
         <div class="bzz-other-input">
-          <Input @on-enter="queryData" v-model="queryParam.phone" placeholder="手机账号搜索" search></Input>
+          <Input @on-search="queryData" v-model="queryParam.phone" placeholder="手机账号搜索"  search></Input>
         </div>
       </div>
       <!--   表格   -->
@@ -35,8 +35,8 @@
       </div>
       <!--   分页   -->
       <div class="bzz-paging">
-        <Page @on-change="pageClick" :total="queryParam.total" :page-size="queryParam.limit"/>
-        <p>共 {{ queryParam.pages }} 页</p>
+        <Page @on-change="pageClick" :total="inputParam.total" :page-size="queryParam.limit"/>
+        <p>共 {{ inputParam.pages }} 页</p>
       </div>
     </div>
   </div>
@@ -71,7 +71,7 @@
                 },
                 on: {
                   click: () => {
-                    window.open('https://www.yitaifang.com/')
+                    window.open('https://goerli.etherscan.io/address/' + params.row.nodeAddr)
                   }
                 }
               }, params.row.nodeAddr)
@@ -172,13 +172,13 @@
             }
           },
           {
-            title: '创建日期',
+            title: '更新日期',
             key: 'createTime',
             width: 100,
             resizable: true,
             render: (h, params) => {
               return h('p', {
-              },momnet(params.row.createTime).format('YYYY-MM-DD'))
+              },momnet(params.row.updateTime).format('YYYY-MM-DD'))
             }
           },
           {
@@ -235,15 +235,17 @@
           pages: ''
         },
         queryParam: {
-          total: 0,
-          size: 10,
           page: 1,
-          pages: 0,
           limit: 20,
-          selectValue: '',
           phone: '',
           rnd5: ''
-        } // 查询参数
+        }, // 查询参数
+        inputParam: {
+          total: 0,
+          size: 10,
+          pages: 0,
+          selectValue: ''
+        }  // 输入参数
       }
     },
     mounted() {
@@ -254,13 +256,14 @@
       // 查询数据
       queryData() {
         const _this = this
+        _this.isLoading = true
         getListData(this.queryParam).then(res => {
-          _this.isLoading = false
           const {data, code, msg} = res.data
+          _this.isLoading = false
           if (code === 0) {
             // 分页数据
-            _this.queryParam.total = data.totalNode
-            _this.queryParam.pages = data.totalPage
+            _this.inputParam.total = data.totalNode
+            _this.inputParam.pages = data.totalPage
             // 状态数据
             _this.stateData.onSum = data.onlines || 0
             _this.stateData.offSum = data.offlines || 0
@@ -272,6 +275,8 @@
             _this.headData[4].number = data.totalAlreayCheque
             // 列表数据
             _this.dataList = data.data
+            // 弹框信息
+            _this.$Message.success('查询成功')
           } else {
             _this.$Message.error(msg)
           }

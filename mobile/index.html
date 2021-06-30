@@ -22,7 +22,8 @@
 <div id="app">
     <!-- 搜索框   -->
     <div class="search-box">
-        <mu-text-field v-model="searchValue" @keypress="searchKeypress" @blur="searchClick" :full-width="true"
+<!--   @blur="searchClick"     -->
+        <mu-text-field v-model="searchValue" @keypress="searchKeypress"  :full-width="true"
                        class="content-box" :solo="true">
             <img slot="prepend" class="icon" src="./images/sslogo.png">
             <i slot="append" @click="searchClick" class="custom-icon">&#xe622;</i>
