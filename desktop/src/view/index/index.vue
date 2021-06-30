@@ -57,7 +57,8 @@
             title: '节点名称',
             key: 'ip',
             width: 100,
-            ellipsis: true
+            ellipsis: true,
+            tooltip: true
           },
           {
             title: '节点地址',
