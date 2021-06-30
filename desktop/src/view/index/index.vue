@@ -334,7 +334,7 @@
        * 过滤手机号
        */
       f_Phone(data) {
-        if (data !== '') {
+        if (data !== '' && data !== null) {
           return data.replace(/^(.{3}).+(.{4})$/, '$1****$2');
         }
         return ''
