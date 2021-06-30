@@ -26,7 +26,7 @@
           </Select>
         </div>
         <div class="bzz-other-input">
-          <Input @on-search="queryData" v-model="queryParam.phone" placeholder="手机账号搜索"  search></Input>
+          <Input @on-search="searchQueryData" v-model="queryParam.phone" placeholder="手机账号搜索"  search></Input>
         </div>
       </div>
       <!--   表格   -->
@@ -35,7 +35,7 @@
       </div>
       <!--   分页   -->
       <div class="bzz-paging">
-        <Page @on-change="pageClick" :total="inputParam.total" :page-size="queryParam.limit"/>
+        <Page @on-change="pageClick" :current="queryParam.page" :total="inputParam.total" :page-size="queryParam.limit"/>
         <p>共 {{ inputParam.pages }} 页</p>
       </div>
     </div>
@@ -253,6 +253,11 @@
       this.queryData()
     },
     methods: {
+      // 搜索框查询
+      searchQueryData() {
+        this.queryParam.page = 1
+        this.queryData()
+      },
       // 查询数据
       queryData() {
         const _this = this
