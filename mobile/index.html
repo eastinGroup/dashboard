@@ -75,7 +75,7 @@
                         <!--       数据         -->
                         <mu-row gutter class="value-box">
                             <mu-col span="5"><p class="cell-data">{{ item.phone || '' | f_Phone}}</p></mu-col>
-                            <mu-col span="4"><p class="cell-data">{{ item.nodeAddr }}</p></mu-col>
+                            <mu-col span="4"><p class="cell-data">{{ item.chequeAddr }}</p></mu-col>
                             <mu-col span="3"><p class="cell-data">{{item.alreadyExchanged}}</p></mu-col>
                         </mu-row>
                         <!--       表头标题         -->
@@ -107,7 +107,7 @@
                                 <strong style="color: #F81515">{{item.totalSend}}</strong> /
                                 <strong style="color: #ffffff">{{item.totalCheque}}</strong>
                             </p></mu-col>
-                            <mu-col span="3"><p class="cell-data">{{ item.chequeAddr }}</p></mu-col>
+                            <mu-col span="3"><p class="cell-data">{{ item.ethAddr }}</p></mu-col>
                         </mu-row>
                     </mu-container>
                 </transition-group>

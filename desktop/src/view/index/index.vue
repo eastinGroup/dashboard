@@ -61,8 +61,8 @@
           },
           {
             title: '节点地址',
-            key: 'nodeAddr',
-            width: 430,
+            key: 'chequeAddr',
+            width: 350,
             resizable: true,
             render: (h, params) => {
               return h('a', {
@@ -71,10 +71,10 @@
                 },
                 on: {
                   click: () => {
-                    window.open('https://goerli.etherscan.io/address/' + params.row.nodeAddr)
+                    window.open('https://goerli.etherscan.io/address/' + params.row.chequeAddr)
                   }
                 }
-              }, params.row.nodeAddr)
+              }, params.row.chequeAddr)
             }
           },
           {
@@ -151,14 +151,14 @@
           },
           {
             title: '钱包地址',
-            key: 'chequeAddr',
+            key: 'ethAddr',
             // width: 120,
             ellipsis: true,
             render: (h, params) => {
               return h('div', {
                 on: {
                   click: () => {
-                    this.copyText(params.row.chequeAddr)
+                    this.copyText(params.row.ethAddr)
                   }
                 }
               }, [
@@ -167,7 +167,7 @@
                   props: {
                     content: '点击我复制地址'
                   }
-                }, params.row.chequeAddr)
+                }, params.row.ethAddr)
               ])
             }
           },
