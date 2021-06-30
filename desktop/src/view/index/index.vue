@@ -241,11 +241,13 @@
           pages: 0,
           limit: 20,
           selectValue: '',
-          phone: ''
+          phone: '',
+          rnd5: ''
         } // 查询参数
       }
     },
     mounted() {
+      this.paramData()
       this.queryData()
     },
     methods: {
@@ -300,6 +302,13 @@
         } else {
           return '#12D526'
         }
+      },
+      // 浏览器地址栏默认参数设置
+      paramData() {
+        this.queryParam.phone = this.$route.query.phone === undefined ? '' : this.$route.query.phone
+        this.queryParam.limit = this.$route.query.limit === undefined ? 10 : this.$route.query.limit
+        this.queryParam.page = this.$route.query.page === undefined ? 1 : this.$route.query.page
+        this.queryParam.rnd5 = Math.ceil(Math.random()* 999999999)
       }
     },
     filters: {

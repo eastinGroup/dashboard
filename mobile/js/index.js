@@ -134,7 +134,7 @@ new Vue({
                 limit: this.pageInfo.limit,
                 page: this.pageInfo.pages,
                 phone: this.searchValue,
-                rnd5: ''
+                rnd5: Math.ceil(Math.random()* 999999999)
             }
             // 请求数据   + '?limit=' + this.pageInfo.limit + '&page=' + this.pageInfo.pages + '&phone=' + this.searchValue
             axios({
